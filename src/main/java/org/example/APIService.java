@@ -11,7 +11,9 @@ public class APIService {
     private final AzureAIServiceClient azureClient;
     // 用于存储历史记录
     private List<JsonObject> messageHistory;
-    public APIService() {
+    // 系统消息
+    private JsonObject systemMessage;
+    public APIService(List<String> questionTypes) {
         Dotenv dotenv = Dotenv.configure().load();
 
         // 读取环境变量
@@ -20,38 +22,68 @@ public class APIService {
         String baseUrl = dotenv.get("MODEL_BASE_URL");
         String endpoint = dotenv.get("MODEL_ENDPOINT");
 
-        //        // 测试读取是否顺利
+//        // 测试读取是否顺利
 //        System.out.println("Model Name: " + modelName);
 //        System.out.println("API Key: " + apiKey);
 //        System.out.println("Base URL: " + baseUrl);
 //        System.out.println("Endpoint: " + endpoint);
-
         this.azureClient = new AzureAIServiceClient(apiKey, modelName, baseUrl, endpoint);
 
         // 初始化消息历史
         this.messageHistory = new ArrayList<>();
+        // 依照用户选择，初始化系统消息
+        initializeLLM(questionTypes);
     }
 
-    public String callAPIService(String prompt) {
-        // 将用户输入的 prompt 添加到历史记录
-        JsonObject userMessage = new JsonObject();
-        userMessage.addProperty("role", "user");
-        userMessage.addProperty("content", prompt);
-        messageHistory.add(userMessage);
+    // 初始化 LLM 和问题 Prompt（调用一次）
+    private void initializeLLM(List<String> questionTypes) {
+        this.systemMessage = new JsonObject();
+        this.systemMessage.addProperty("role", "system");
+        // 构建包含问题类型的描述 Prompt
+        String combinedPrompt = Prompt.buildPrompt(questionTypes);
+        this.systemMessage.addProperty("content", combinedPrompt);
+    }
 
-        // 构建请求的 JSON，包含历史消息
+    // 更新系统 Prompt（支持动态调整）
+    public void updateSystemPrompt(List<String> newQuestionTypes) {
+        String updatedPrompt = Prompt.buildPrompt(newQuestionTypes);
+        this.systemMessage.addProperty("content", updatedPrompt);
+    }
+
+    //依据LLM返回获取有用信息
+    public String parsingJsonString(String response) {
+        JsonObject jsonObject = JsonParser.parseString(response).getAsJsonObject();
+        JsonArray choices = jsonObject.getAsJsonArray("choices");
+        JsonObject message = choices.get(0).getAsJsonObject().getAsJsonObject("message");
+        String content = message.get("content").getAsString();
+
+        System.out.println("GPT response: " + content);
+        return content;
+    }
+
+    // 添加消息到历史记录
+    private void addToHistory(String role, String content) {
+        JsonObject message = new JsonObject();
+        message.addProperty("role", role);
+        message.addProperty("content", content);
+        messageHistory.add(message);
+    }
+
+    //构建request
+    private JsonObject buildRequest(String material, String userFeedback) {
         JsonObject requestBody = new JsonObject();
         JsonArray messages = new JsonArray();
 
-        // 添加系统消息
-        JsonObject systemMessage = new JsonObject();
-        systemMessage.addProperty("role", "system");
+        //添加系统消息
+        messages.add(this.systemMessage);
 
-        //这里添加GPT的describe prompt
-        systemMessage.addProperty("content", "You are an AI assistant that helps people create question.");
-        messages.add(systemMessage);
+        // 添加用户材料和反馈
+        addToHistory("user",material);
+        if (userFeedback != null && !userFeedback.isEmpty()) {
+            addToHistory( "user","Refine the questions based on this feedback: " + userFeedback);
+        }
 
-        // 添加历史记录中的所有消息
+        // 将历史记录写入请求体
         for (JsonObject message : messageHistory) {
             messages.add(message);
         }
@@ -60,22 +92,22 @@ public class APIService {
         requestBody.add("messages", messages);
         requestBody.addProperty("temperature", 0.9);
 
-        // 调用 API 并获取响应
+        return requestBody;
+    }
+
+    //调用API解析响应
+    private String callLLM(JsonObject requestBody) {
         String response = azureClient.callAzureAPI("chat/completions", requestBody.toString());
+        return parsingJsonString(response);
+    }
 
-        // 解析 JSON 字符串
-        JsonObject jsonObject = JsonParser.parseString(response).getAsJsonObject();
-        JsonArray choices = jsonObject.getAsJsonArray("choices");
-        JsonObject message = choices.get(0).getAsJsonObject().getAsJsonObject("message");
-        String content = message.get("content").getAsString();
+    //真的用户与此类交互接口
+    public String callAPIService(String material, String userFeedback) {
+        JsonObject requestBody = buildRequest(material, userFeedback);
+        String content = callLLM(requestBody);
+        //更新历史记录
+        addToHistory("assistant",material);
 
-        System.out.println("GPT response: " + content);
-
-        // 将 AI 的回应添加到历史记录中，方便下一轮对话使用
-        JsonObject aiMessage = new JsonObject();
-        aiMessage.addProperty("role", "assistant");
-        aiMessage.addProperty("content", content);
-        messageHistory.add(aiMessage);
         return content;
     }
 }
