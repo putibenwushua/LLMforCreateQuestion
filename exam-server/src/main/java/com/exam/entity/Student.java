@@ -3,15 +3,17 @@ package com.exam.entity;
 import lombok.Data;
 
 @Data
-public class Teacher {
-    private Integer teacherId;
-    private String teacherName;
+public class Student {
+    private Integer studentId;
+    private String studentName;
+    private String grade;
+    private String major;
+    private String clazz;
     private String institute;
-    private String sex;
     private String tel;
     private String email;
     private String pwd;
     private String cardId;
-    private String type;
+    private String sex;
     private String role;
 }
