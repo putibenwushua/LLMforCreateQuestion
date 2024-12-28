@@ -15,34 +15,35 @@ public class ScoreController {
     private ScoreServiceImpl scoreService;
 
     @GetMapping("/scores")
-    public ApiResult findAll() {
-        List<Score> res = scoreService.findAll();
-        return ApiResultHandler.buildApiResult(200,"查询所有学生成绩",res);
+    public ApiResult findAllScores() {
+        List<Score> scores = scoreService.findAll();
+        return ApiResultHandler.buildApiResult(200, "查询所有学生成绩", scores);
     }
 
     @GetMapping("/score/{studentId}")
-    public ApiResult findById(@PathVariable("studentId") Integer studentId) {
-        List<Score> res = scoreService.findById(studentId);
-        if (!res.isEmpty()) {
-            return ApiResultHandler.buildApiResult(200,"根据ID查询成绩",res);
-        }else {
-            return ApiResultHandler.buildApiResult(400,"ID不存在",res);
+    public ApiResult findScoreByStudentId(@PathVariable("studentId") Integer studentId) {
+        List<Score> scores = scoreService.findById(studentId);
+        if (!scores.isEmpty()) {
+            return ApiResultHandler.buildApiResult(200, "根据ID查询成绩", scores);
+        } else {
+            return ApiResultHandler.buildApiResult(400, "ID不存在", scores);
         }
     }
 
     @PostMapping("/score")
-    public ApiResult add(@RequestBody Score score) {
-        int res = scoreService.add(score);
-        if (res == 0) {
-            return ApiResultHandler.buildApiResult(400,"成绩添加失败",res);
-        }else {
-            return ApiResultHandler.buildApiResult(200,"成绩添加成功",res);
+    public ApiResult addScore(@RequestBody Score score) {
+        int result = scoreService.add(score);
+        if (result == 0) {
+            return ApiResultHandler.buildApiResult(400, "成绩添加失败", result);
+        } else {
+            return ApiResultHandler.buildApiResult(200, "成绩添加成功", result);
         }
     }
 
     @GetMapping("/scores/{examCode}")
-    public ApiResult findByExamCode(@PathVariable("examCode") Integer examCode) {
+    public ApiResult findScoresByExamCode(@PathVariable("examCode") Integer examCode) {
         List<Score> scores = scoreService.findByExamCode(examCode);
-        return ApiResultHandler.buildApiResult(200,"查询成功",scores);
+        return ApiResultHandler.buildApiResult(200, "查询成功", scores);
     }
+
 }
