@@ -10,11 +10,11 @@ public interface TeacherService {
 
     IPage<Teacher> findAll(Page<Teacher> page);
 
-    public Teacher findById(Integer teacherId);
+    Teacher findById(Integer teacherId);
 
-    public int deleteById(Integer teacherId);
+    int deleteById(Integer teacherId);
 
-    public int update(Teacher teacher);
+    int update(Teacher teacher);
 
-    public int add(Teacher teacher);
+    int add(Teacher teacher);
 }
