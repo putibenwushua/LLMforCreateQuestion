@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface AdminService {
 
-    public List<Admin> findAll();
+    List<Admin> findAll();
 
-    public Admin findById(Integer adminId);
+    Admin findById(Integer adminId);
 
-    public int deleteById(int adminId);
+    int deleteById(int adminId);
 
-    public int update(Admin admin);
+    int update(Admin admin);
 
-    public int add(Admin admin);
+    int add(Admin admin);
 }
