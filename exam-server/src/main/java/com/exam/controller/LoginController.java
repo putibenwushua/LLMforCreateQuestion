@@ -16,7 +16,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public ApiResult login(@RequestBody Login login) {
-//        System.out.println(login);
+        System.out.println(login);
 
         Integer userId = login.getUserId();
         String password = login.getPassword();
