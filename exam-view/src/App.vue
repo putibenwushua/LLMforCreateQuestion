@@ -1,36 +1,20 @@
-
 <template>
-  <div id="app">
-    <router-view/>
-  </div>
+  <router-view></router-view>
 </template>
 
 <script>
 export default {
-  name: 'App',
-  created() {
-    var token = this.$cookies.get("rb_token");
-    var role = this.$cookies.get("rb_role");
-    if(token == null || token == "" || role == null || role == null) {
-      this.$router.push({path: '/' }) //跳转到首页
-    }
-  }
+  name: 'App'
 }
 </script>
 
 <style>
-ul {
-  list-style: none;
-}
-a {
-  text-decoration: none;
-}
-* {
-  margin: 0;
-  padding: 0;
-}
 #app {
-  font-family: "Microsoft YaHei", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
-  background-color: #eee;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
 }
 </style>
