@@ -1,0 +1,15 @@
+.DS_Store
+/exam-view/node_modules/
+/exam-server/target/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+yarn.lock
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
