@@ -80,7 +80,7 @@ public class APIService {
         // 添加用户材料和反馈
         addToHistory("user",material);
         if (userFeedback != null && !userFeedback.isEmpty()) {
-            addToHistory( "user","Refine the questions based on this feedback: " + userFeedback);
+            addToHistory( "user","create the questions based on this prompt: " + userFeedback);
         }
 
         // 将历史记录写入请求体
@@ -88,9 +88,10 @@ public class APIService {
             messages.add(message);
         }
 
-        // 设置温度参数
+        // 设置温度等参数
         requestBody.add("messages", messages);
         requestBody.addProperty("temperature", 0.9);
+        requestBody.addProperty("max_tokens", 3000);
 
         return requestBody;
     }

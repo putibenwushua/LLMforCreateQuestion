@@ -3,7 +3,10 @@ package org.example;
 import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.net.SocketTimeoutException;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class AzureAIServiceClient {
     private final String apiKey;
@@ -19,7 +22,12 @@ public class AzureAIServiceClient {
         this.deployment = deployment;
         this.endpoint = endpoint;
         this.apiVersion = apiVersion;
-        this.client = new OkHttpClient();
+        //处理可能的超时
+        this.client = new OkHttpClient.Builder()
+                .connectTimeout(20, TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS)
+                .writeTimeout(20, TimeUnit.SECONDS)
+                .build();
     }
 
     // API 调用方法
@@ -41,8 +49,11 @@ public class AzureAIServiceClient {
                 throw new RuntimeException("Unexpected response code: " + response);
             }
             return Objects.requireNonNull(response.body()).string();
+        } catch (SocketTimeoutException e) {
+            System.err.println("Timeout occurred: " + e.getMessage());
         } catch (Exception e) {
             throw new RuntimeException("Error occurred while invoking Azure OpenAI API: " + e.getMessage(), e);
         }
+        return null;
     }
 }
