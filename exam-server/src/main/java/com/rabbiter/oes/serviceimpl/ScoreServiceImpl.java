@@ -12,9 +12,9 @@ import java.util.List;
 
 @Service
 public class ScoreServiceImpl implements ScoreService {
-
     @Autowired
     private ScoreMapper scoreMapper;
+
     @Override
     public int add(Score score) {
         return scoreMapper.add(score);

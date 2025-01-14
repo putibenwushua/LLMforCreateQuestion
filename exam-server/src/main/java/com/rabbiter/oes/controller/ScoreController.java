@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 public class ScoreController {
+
     @Autowired
     private ScoreServiceImpl scoreService;
 

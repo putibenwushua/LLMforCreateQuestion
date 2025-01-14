@@ -24,5 +24,4 @@ public interface ExamManageService {
 
     ExamManage findOnlyPaperId();
 
-
 }

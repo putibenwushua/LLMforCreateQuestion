@@ -10,7 +10,6 @@ import java.util.List;
 
 @Service
 public class ReplayServiceImpl implements ReplayService {
-
     @Autowired
     private ReplayMapper replayMapper;
 

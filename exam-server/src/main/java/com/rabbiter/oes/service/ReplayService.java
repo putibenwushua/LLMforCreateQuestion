@@ -5,7 +5,6 @@ import com.rabbiter.oes.entity.Replay;
 import java.util.List;
 
 public interface ReplayService {
-
     List<Replay> findAll();
 
     List<Replay> findAllById(Integer messageId);

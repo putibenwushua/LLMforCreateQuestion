@@ -15,6 +15,7 @@ public class MessageController {
     @Autowired
     private MessageServiceImpl messageService;
 
+
     @GetMapping("/messages/{page}/{size}")
     public ApiResult<Message> findAll(@PathVariable("page") Integer page, @PathVariable("size") Integer size) {
         Page<Message> messagePage = new Page<>(page,size);
