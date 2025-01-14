@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface ScoreService {
     int add(Score score);
-
     List<Score> findAll();
 
     IPage<Score> findById(Page page, Integer studentId);

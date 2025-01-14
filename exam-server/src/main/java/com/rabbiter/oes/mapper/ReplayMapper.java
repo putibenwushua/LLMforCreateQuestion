@@ -8,6 +8,7 @@ import java.util.List;
 @Mapper
 public interface ReplayMapper {
 
+
     @Select("select messageId,replayId,replay,replayTime from replay")
     List<Replay> findAll();
 

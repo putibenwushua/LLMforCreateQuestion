@@ -12,6 +12,7 @@ import java.util.List;
 
 @Service
 public class ExamManageServiceImpl implements ExamManageService {
+
     @Autowired
     private ExamManageMapper examManageMapper;
     @Autowired

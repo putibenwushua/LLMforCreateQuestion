@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface MessageMapper {
+
     @Select("select id,id as temp_id,title,content,time from message order by id desc")
     @Results({
             @Result(property = "replays", column = "temp_id",many = @Many(select = "com.rabbiter.oes.mapper.ReplayMapper.findAllById"))

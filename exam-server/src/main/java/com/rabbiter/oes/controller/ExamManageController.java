@@ -15,6 +15,7 @@ public class ExamManageController {
     @Autowired
     private ExamManageServiceImpl examManageService;
 
+
     @GetMapping("/exams")
     public ApiResult findAll(){
         System.out.println("不分页查询所有试卷");

@@ -9,8 +9,6 @@ import java.util.List;
 
 @Mapper
 public interface ExamManageMapper {
-//    @Select("select * from exam_manage")
-//    List<ExamManage> findAll();
 
     @Select("select * from exam_manage")
     IPage<ExamManage> findAll(Page page);
