@@ -2,7 +2,7 @@
 <template>
   <section class="add">
     <el-form ref="form" :model="form" label-width="80px">
-      <el-form-item label="试卷名称">
+      <el-form-item label="考试科目">
         <el-select v-model="form.source" placeholder="请选择试卷名称">
           <el-option label="计算机网络" value="计算机网络"></el-option>
           <el-option label="机械设计" value="机械设计"></el-option>

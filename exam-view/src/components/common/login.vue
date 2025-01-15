@@ -85,7 +85,12 @@ export default {
               this.$cookies.set("role", 0)
               this.$router.push({path: '/index' }) //跳转到首页
               break
-
+            // case "1": //教师
+            //   this.$cookies.set("cname", resData.teacherName)
+            //   this.$cookies.set("cid", resData.teacherId)
+            //   this.$cookies.set("role", 1)
+            //   this.$router.push({path: '/index' }) //跳转到教师用户
+            //   break
             case "2": //学生
               this.$cookies.set("cname", resData.studentName)
               this.$cookies.set("cid", resData.studentId)

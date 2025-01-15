@@ -193,15 +193,15 @@
             </el-form-item>
             <el-form-item label="考试科目">
               <el-select v-model="form.select" placeholder="请选择">
-                <el-option label="机械设计" value="1"></el-option>
-                <el-option label="计算机网络" value="2"></el-option>
+                <el-option label="机械设计" value="机械设计"></el-option>
+                <el-option label="计算机网络" value="计算机网络"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="题目类型">
               <el-select v-model="form.qType" placeholder="请选择">
-                <el-option label="选择题" value="1"></el-option>
-                <el-option label="填空题" value="2"></el-option>
-                <el-option label="判断题" value="3"></el-option>
+                <el-option label="选择题" value="multiple-choice"></el-option>
+                <el-option label="填空题" value="fill-in-the-blank"></el-option>
+                <el-option label="判断题" value="true-false"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="文件上传">
@@ -213,9 +213,19 @@
               </el-upload>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary"  @click="onSubmit">提交</el-button>
+              <el-button type="primary" @click="onSubmit">提交</el-button>
             </el-form-item>
           </el-form>
+
+          <!-- 新增蒙版 -->
+          <div v-if="loading" class="loading-mask">
+            <div class="loading-spinner">
+              <i class="el-icon-loading"></i>
+              <p>正在生成试卷,请稍候...</p>
+            </div>
+          </div>
+
+
         </div>
       </el-tab-pane>
 
@@ -228,10 +238,11 @@
 export default {
   data() {
     return {
+      loading: false, // 新增的 loading 状态
       form: {
-        textInput: '',
-        select: '',
-        qType: ''
+        textInput: 'ISO',
+        select: '计算机网络',
+        qType: 'multiple-choice'
       },
       uploadUrl: '/api/upload',
       uploadedFilePath: '',// 存储上传文件的路径
@@ -363,17 +374,19 @@ export default {
     onSubmit() {
       // 提交表单的处理逻辑
       // 提交表单的处理逻辑
-       if (!this.form.textInput || !this.form.select || !this.form.qType) {
-          this.$message.error('请先填写题目信息');
-          return;
+      if (!this.form.textInput || !this.form.select || !this.form.qType) {
+        this.$message.error('请先填写题目信息');
+        return;
       }
+      this.loading = true; // 开始加载
 
       const form = this.form;
       const data = {
         description: form.textInput,
         subject: form.select,
         questionType: form.qType,
-        filePath: this.uploadedFilePath
+        filePath: this.uploadedFilePath,
+        paperId: this.$route.query.paperId  //获取paperId
       };
       this.$axios.post('/api/llmSubmit', JSON.stringify(data), {
         headers: {
@@ -381,14 +394,16 @@ export default {
         }
       })
         .then(response => {
+          this.loading = false; // 结束加载
           this.$message.success('问题提交成功，继续添加题目或返回');
           this.form = {};
           this.form.filePath = ''; // 额外清空 filePath
-        // 清空文件上传组件中的文件
+          // 清空文件上传组件中的文件
           this.$refs.upload.clearFiles();
           console.log('问题提交成功', response.data);
         })
         .catch(error => {
+          this.loading = false; // 结束加载
           this.$message.error('问题提交失败，请重试！');
           console.error('问题提交失败', error);
         });
@@ -572,6 +587,23 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.loading-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-spinner {
+  color: #fff;
+  font-size: 30px;
+}
 .add {
   margin: 0px 40px;
 
