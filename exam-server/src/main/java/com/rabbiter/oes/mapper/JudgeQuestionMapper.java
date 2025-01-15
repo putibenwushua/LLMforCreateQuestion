@@ -25,6 +25,7 @@ public interface JudgeQuestionMapper {
     @Select("select questionId from judge_question order by questionId desc limit 1")
     JudgeQuestion findOnlyQuestionId();
 
+    @Options(useGeneratedKeys = true,keyProperty ="questionId" )
     @Insert("insert into judge_question(subject,question,answer,analysis,level,section) values " +
             "(#{subject},#{question},#{answer},#{analysis},#{level},#{section})")
     int add(JudgeQuestion judgeQuestion);
