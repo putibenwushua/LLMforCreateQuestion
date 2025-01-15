@@ -30,6 +30,7 @@ public class PythonInvoker {
         return projectRoot + File.separator + "src" + File.separator + "main" +
                 File.separator + "python" + File.separator + ".venv" + File.separator + "Scripts" +
                 File.separator + "python.exe";
+//        return "D:\\DevelopmentTools\\Compiler\\Python\\Python311\\python.exe";
     }
 
     private String getpythonScript(String projectRoot) {

@@ -58,6 +58,8 @@ public class UploadController {
         String courseName = llmQuestion.getSubject();
         //文件路径
         String filepath = llmQuestion.getFilePath();
+
+        Integer paperId = llmQuestion.getPaperId();
         //新建一个对话即依照新材料生成新题目
         ConversationManager manager = new ConversationManager(questionTypes,filepath, userQuery, courseName);
         manager.startConversation();
