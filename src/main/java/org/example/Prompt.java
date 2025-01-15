@@ -9,26 +9,50 @@ import java.util.List;
 public class Prompt {
     // 总体描述 Prompt
     public static String getDescribePrompt() {
-        return "You are an AI assistant tasked with creating various types of questions based on the provided materials. " +
+        return  "You are an AI assistant tasked with creating various types of questions based on the provided materials. " +
                 "The goal is to generate thoughtful, non-repetitive, and clear questions that evaluate the user's understanding. " +
-                "The questions can include multiple-choice questions, true or false questions, fill-in-the-blank questions, and short-answer questions. " +
-                "Make sure all generated questions adhere to the following rules:\n" +
-                "- Questions must be based on the provided material.\n" +
+                "Adhere strictly to the following output format for each question type:\n\n" +
+                "**Multiple Choice Questions**\n" +
+                "1. [Question]\n" +
+                "   A. [Option 1]\n" +
+                "   B. [Option 2]\n" +
+                "   C. [Option 3]\n" +
+                "   D. [Option 4]\n" +
+                "   Answer: [Correct Option]\n" +
+                "   Analysis: [Detailed Explanation]\n" +
+                "Repeat this format for 3 questions.\n\n" +
+                "**True or False Questions**\n" +
+                "1. [Statement]\n" +
+                "   Answer: [True/False]\n" +
+                "   Analysis: [Detailed Explanation]\n" +
+                "Repeat this format for 3 questions.\n\n" +
+                "**Fill-in-the-Blank Questions**\n" +
+                "1. [Sentence with a blank to fill, indicated by __]\n" +
+                "   Answer: [Correct Answer]\n" +
+                "Repeat this format for 3 questions.\n\n" +
+                "**Short-Answer Question**\n" +
+                "1. [Question]\n" +
+                "   Answer: [Detailed Answer]\n\n" +
+                "** Important Notes:**\n" +
+                "- If the material is in English, it returns English; if the material is in Chinese, it returns Chinese."+
+                "- Each section must start with the respective title (**Multiple Choice Questions**, **True or False Questions**, etc.).\n" +
+                "- Ensure that all generated questions are non-repetitive and based on the provided material if material is not null.\n" +
+                "- Use proper indentation and spacing as shown in the format.\n" +
                 "- Questions must be clear and unambiguous.\n" +
-                "- Provide answers and explanations where applicable.\n" +
-                "- If the material is in English, it returns English; if the material is in Chinese, it returns Chinese.";
+                "- Provide answers and explanations where applicable.\n";
     }
 
     // 获取选择题 Prompt
     public static String getMultipleChoicePrompt() {
-        return "Generate 3 unique multiple-choice questions. Each question should include 4 options (A, B, C, D), one correct answer, " +
+        return  "**Multiple Choice Questions**\n" +
+                "Generate 3 unique multiple-choice questions. Each question should include 4 options (A, B, C, D), one correct answer, " +
                 "and an explanation for why the correct answer is right. You need to make the answers appear evenly among the four options abcd\n" +
                 "Output format:\n" +
                 "1. [Question]\n" +
-                "A. Option 1\n" +
-                "B. Option 2\n" +
-                "C. Option 3\n" +
-                "D. Option 4\n" +
+                "A. [Option 1]\n" +
+                "B. [Option 2]\n" +
+                "C. [Option 3]\n" +
+                "D. [Option 4]\n" +
                 "Answer: [Correct Option]\n" +
                 "Analysis: [Explanation]\n" +
                 "Repeat this format for all 3 questions." +
@@ -44,7 +68,8 @@ public class Prompt {
 
     // 获取判断题 Prompt
     public static String getTrueFalsePrompt() {
-        return "Generate 3 unique true or false questions. Each question should test a specific fact or concept from the material. " +
+        return  "**True or False Questions**\n" +
+                "Generate 3 unique true or false questions. Each question should test a specific fact or concept from the material. " +
                 "Provide the correct answer and a brief explanation.\n" +
                 "Output format:\n" +
                 "1. [Statement]\n" +
@@ -55,7 +80,8 @@ public class Prompt {
 
     // 获取填空题 Prompt
     public static String getFillInTheBlankPrompt() {
-        return "Generate 3 unique fill-in-the-blank questions. Each question should require users to recall specific details or facts from the material. " +
+        return  "**Fill-in-the-Blank Questions**\n" +
+                "Generate 3 unique fill-in-the-blank questions. Each question should require users to recall specific details or facts from the material. " +
                 "Provide the correct answer.\n" +
                 "Output format:\n" +
                 "1. [Sentence with a blank to fill, indicated by __]\n" +
@@ -65,7 +91,8 @@ public class Prompt {
 
     // 获取简答题 Prompt
     public static String getShortAnswerPrompt() {
-        return "Generate 1 short-answer question. The question should prompt users to provide a concise but detailed explanation. " +
+        return  "**Short-Answer Question**\n" +
+                "Generate 1 short-answer question. The question should prompt users to provide a concise but detailed explanation. " +
                 "Provide the correct answer or a model response.\n" +
                 "Output format:\n" +
                 "1. [Question]\n" +
