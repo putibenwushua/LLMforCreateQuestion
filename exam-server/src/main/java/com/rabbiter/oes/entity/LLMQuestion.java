@@ -14,6 +14,16 @@ public class LLMQuestion {
     private String filePath;     //文件路径
     private String questionType;    //问题类型：1-选择题，2-填空题，3-判断题
     private String subject;      //科目：1-机械设计，2-计算机网络
+    private Integer paperId;
+
+
+    public Integer getPaperId() {
+        return paperId;
+    }
+
+    public void setPaperId(Integer paperId) {
+        this.paperId = paperId;
+    }
 
     // Getters and Setters
     public String getDescription() {
