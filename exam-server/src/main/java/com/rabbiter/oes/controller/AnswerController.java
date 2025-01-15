@@ -24,9 +24,9 @@ public class AnswerController {
             @PathVariable("page") Integer page, @PathVariable("size") Integer size,
             @PathVariable("subject") String subject, @PathVariable("section") String section,
             @PathVariable("question") String question){
-        Page<AnswerVO> answerVOPage = new Page<>(page,size);
-        IPage<AnswerVO> answerVOIPage = answerService.findAll(answerVOPage, subject, section, question);
-        return ApiResultHandler.buildApiResult(200,"查询所有题库", answerVOIPage);
+       Page<AnswerVO> answerVOPage = new Page<>(page,size);
+       IPage<AnswerVO> answerVOIPage = answerService.findAll(answerVOPage, subject, section, question);
+       return ApiResultHandler.buildApiResult(200,"查询所有题库", answerVOIPage);
     }
 
     /**
