@@ -63,7 +63,7 @@ CREATE TABLE `exam_manage`  (
 -- ----------------------------
 -- Records of exam_manage
 -- ----------------------------
-INSERT INTO `exam_manage` VALUES (20190022, NULL, '机械设计', 1002, '2023-05-02', 90, '2019', NULL, '机械工程', '国际学院', NULL, '期末', NULL);
+INSERT INTO `exam_manage` VALUES (20190022, NULL, '机械设计', 1002, '2023-05-02', 90, '2019', NULL, '机械工程', '工程科学学院', NULL, '期末', NULL);
 
 -- ----------------------------
 -- Table structure for fill_question
@@ -534,8 +534,8 @@ CREATE TABLE `student`  (
 -- ----------------------------
 -- Records of student
 -- ----------------------------
-INSERT INTO `student` VALUES (20225010, '胡博涵', '2019', '机械工程', '2', '国际学院', '13333333333', NULL, '123456', NULL, '男', '2');
-INSERT INTO `student` VALUES (20225011, '李宇航', '2019', '机械工程', '2', '国际学院', '15555555555', NULL, '123456', NULL, '男', '2');
+INSERT INTO `student` VALUES (20225010, '刘鹏翔', '2024', '机械工程', '2', '工程科学学院', '13333333333', NULL, '123456', NULL, '男', '2');
+INSERT INTO `student` VALUES (20225011, '彭涛', '2024', '机械工程', '2', '工程科学学院', '15555555555', NULL, '123456', NULL, '男', '2');
 
 -- ----------------------------
 -- Table structure for teacher
@@ -558,6 +558,6 @@ CREATE TABLE `teacher`  (
 -- ----------------------------
 -- Records of teacher
 -- ----------------------------
-INSERT INTO `teacher` VALUES (20081006, '张三', '国际学院', '男', '18888888888', NULL, '123456', NULL, '讲师', '1');
+INSERT INTO `teacher` VALUES (20081006, '张三', '工程科学学院', '男', '18888888888', NULL, '123456', NULL, '讲师', '1');
 
 SET FOREIGN_KEY_CHECKS = 1;
