@@ -6,6 +6,10 @@
         <el-select v-model="form.source" placeholder="请选择试卷名称">
           <el-option label="计算机网络" value="计算机网络"></el-option>
           <el-option label="机械设计" value="机械设计"></el-option>
+          <el-option label="高级软件工程" value="高级软件工程"></el-option>
+          <el-option label="机器学习" value="机器学习"></el-option>
+          <el-option label="英语" value="英语"></el-option>
+          <el-option label="语文" value="语文"></el-option>
         </el-select>
       </el-form-item>
       <!-- <el-form-item label="介绍">
